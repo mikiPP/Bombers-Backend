@@ -2,8 +2,7 @@ package org.lasencinas.bombersauthentication.Service.AuthUser;
 
 
 
-import com.google.common.base.Preconditions;
-import org.hibernate.service.spi.ServiceException;
+import org.lasencinas.bombersauthentication.Api.Controller.Exception.ServiceException;
 import org.lasencinas.bombersauthentication.Model.Api.AuthUserDto;
 import org.lasencinas.bombersauthentication.Model.Converter.AuthUserConverter;
 import org.lasencinas.bombersauthentication.Model.Domain.AuthUser.AuthUser;
@@ -68,18 +67,12 @@ public class AuthUserImplementation implements AuthUserService {
                 Boolean.class);
 
         }catch (HttpServerErrorException | HttpClientErrorException ex) {
-            throw new RuntimeException();
+            throw new ServiceException.Builder(HttpStatus.INTERNAL_SERVER_ERROR.toString())
+                    .withMessage("Error while validating DNI. ")
+                    .withCause(ex)
+                    .build();
         }
 
-        System.out.println(response);
-//
-//        if(response.getBody() == false) {
-//
-//            Preconditions.checkArgument(dniRepository.findById(user.getDni().getDni()).isPresent(),
-//                    "The Dni does not exist in the data base");
-//            Preconditions.checkArgument(dniRepository.findById(user.getDni().getDni()).get().getUser() == null,
-//                    "The Dni has been used");
-//        }
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.getDni().setUser(user);

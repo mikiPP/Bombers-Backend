@@ -1,5 +1,6 @@
 package org.lasencinas.bombersauthentication.Service.Dni;
 
+import com.google.common.base.Preconditions;
 import org.lasencinas.bombersauthentication.Model.Domain.Dni.Dni;
 import org.lasencinas.bombersauthentication.Repository.DniRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +30,15 @@ public class DniServiceImplementation implements DniService {
      *
      *  @return Boolean
      */
-
-
-
-
     @Override
     public Boolean validateDni(String dni) {
 
-        Optional<Dni>  dniFromDataBase = dniRepository.findById(dni);
+        Preconditions.checkArgument(dniRepository.findById(dni).isPresent(),
+                "The Dni does not exist in the data base");
 
-        return dniFromDataBase.isPresent() && dniFromDataBase.get().getUser() != null;
+        Preconditions.checkArgument(dniRepository.findById(dni).get().getUser() == null,
+                "The Dni has been used");
+
+        return true;
     }
 }

@@ -9,7 +9,7 @@ public final class SecurityConstants {
     static final String SIGN_UP_URL = "/auth/sign-up";
     static final String LOGGED_OUT_URL = "/auth/logged-out";
     static final String LOGGIN_URL = "/login";
-    static final String VALIDATE_DNI_URL = "dni/**";
+    static final String VALIDATE_DNI_URL = "/**";
 
 
 }
