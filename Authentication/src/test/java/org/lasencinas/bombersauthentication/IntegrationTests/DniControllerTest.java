@@ -1,5 +1,7 @@
 package org.lasencinas.bombersauthentication.IntegrationTests;
 
+import org.lasencinas.bombersauthentication.IntegrationTest;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lasencinas.bombersauthentication.IntegrationTest;
@@ -20,53 +22,50 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class AuthUserControllerTest extends IntegrationTest {
+public class DniControllerTest extends IntegrationTest {
 
-    private Long Id = 1l;
 
     private int index = 0;
 
     private List<String> dnis = Arrays.asList("86854224Z","25108985T","45822494P","41038536G","52304534G");
 
     @Test
-    public void createAAuthUserShouldReturnTheSameAuthUser() throws Exception {
+    public void checkValidDniShouldReturnTrue() throws Exception {
 
         /*-------------------------- Given  --------------------------*/
 
-        String inputJson = super.mapToJson(createAuthUserDto());
 
         /*-------------------------- When  --------------------------*/
 
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/auth/sign-up")
-                .contentType(MediaType.APPLICATION_JSON).content(inputJson)).andReturn();
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get( "/dni?dni=" + dnis.get(index))
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
 
         String content = mvcResult.getResponse().getContentAsString();
 
-        AuthUserDto authUserDto = super.mapFromJson(content, AuthUserDto.class);
+        Boolean response = super.mapFromJson(content, Boolean.class);
 
 
         /*-------------------------- Then  --------------------------*/
 
         assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
-        assertTrue(authUserDto instanceof  AuthUserDto);
+        assertTrue(response instanceof  Boolean);
+        assertTrue(response);
+        index++;
     }
 
 
     @Test
-    public void createAAuthUserWithBadBodyShouldReturnBadRequest() throws Exception {
+    public void checkInvalidDniShouldReturnBadRequest() throws Exception {
 
         /*-------------------------- Given  --------------------------*/
 
-        AuthUserDto authUserDto = createAuthUserDto();
-        authUserDto.setDni(null);
 
-        String inputJson = super.mapToJson(authUserDto);
 
 
         /*-------------------------- When  --------------------------*/
 
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/auth/sign-up")
-                .contentType(MediaType.APPLICATION_JSON).content(inputJson)).andReturn();
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get("/dni?aaa")
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
 
 
         /*-------------------------- Then  --------------------------*/
@@ -74,28 +73,6 @@ public class AuthUserControllerTest extends IntegrationTest {
         assertEquals(HttpStatus.BAD_REQUEST.value(), mvcResult.getResponse().getStatus());
 
     }
-
-
-    private AuthUserDto createAuthUserDto() {
-
-        AuthUserDto authUserDto = new AuthUserDto();
-        DniDto dni = new DniDto();
-        dni.setDni(dnis.get(index));
-
-        authUserDto.setId(Id);
-        authUserDto.setEmail(String.format("test%s@test.com",Id));
-        authUserDto.setDni(dni);
-        authUserDto.setPassword("Test" + Id);
-
-        Id++;
-        index++;
-
-        return authUserDto;
-    }
-
-
-
-
 
     @Override
     protected void initializeIntegrationTest() {
