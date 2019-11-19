@@ -8,10 +8,15 @@ public class ServiceException extends RuntimeException {
     private final HttpStatus httpStatus;
 
 
-    private ServiceException(String code,HttpStatus httpStatus,String message,Throwable cause) {
-        super(message,cause);
+    private ServiceException(String code, HttpStatus httpStatus, String message, Throwable cause) {
+        super(message, cause);
         this.code = code;
         this.httpStatus = httpStatus;
+    }
+
+    public static Builder getBuilder() {
+
+        return new Builder();
     }
 
     public String getCode() {
@@ -22,11 +27,6 @@ public class ServiceException extends RuntimeException {
         return this.httpStatus;
     }
 
-    public static Builder getBuilder() {
-
-        return new Builder();
-    }
-
     public static class Builder {
         private String code;
         private String message;
@@ -34,7 +34,8 @@ public class ServiceException extends RuntimeException {
         private Throwable cause;
 
 
-        private Builder() { }
+        private Builder() {
+        }
 
         public Builder(String code) {
             this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;

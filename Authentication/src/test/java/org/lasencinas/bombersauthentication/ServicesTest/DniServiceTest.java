@@ -18,7 +18,7 @@ public class DniServiceTest extends IntegrationTest {
 
     private int index = 0;
 
-    private List<String> dnis = Arrays.asList("86854224Z","25108985T","45822494P","41038536G","52304534G");
+    private List<String> dnis = Arrays.asList("86854224Z", "25108985T", "45822494P", "41038536G", "52304534G");
 
     @Autowired
     private DniService dniService;
@@ -37,11 +37,10 @@ public class DniServiceTest extends IntegrationTest {
         /*-------------------------- Then  --------------------------*/
 
 
-        assertTrue(response instanceof  Boolean);
+        assertTrue(response instanceof Boolean);
         assertTrue(response);
         index++;
     }
-
 
 
     @Test(expected = IllegalArgumentException.class)
@@ -53,7 +52,7 @@ public class DniServiceTest extends IntegrationTest {
 
         /*-------------------------- When  --------------------------*/
 
-         dniService.validateDni(dni);
+        dniService.validateDni(dni);
 
         /*-------------------------- Then  --------------------------*/
 

@@ -19,7 +19,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -50,7 +49,6 @@ public class AuthUser {
 //
 //    @Column(name = "NAME")
 //    private String name;
-
 
 
     // Constructor

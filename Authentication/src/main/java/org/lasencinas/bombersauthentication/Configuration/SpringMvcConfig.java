@@ -17,14 +17,11 @@ public class SpringMvcConfig implements WebMvcConfigurer {
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
             "classpath:/META-INF/resources/", "classpath:/resources/",
             "classpath:/static/", "classpath:/public/"};
-
+    private final ModelMapper modelMapper;
     @Value(value = "*")
     private String allowedOrigin;
-
     @Value("${swagger.enabled}")
     private boolean swaggerEnabled;
-
-    private final ModelMapper modelMapper;
 
     @Autowired
     public SpringMvcConfig(ModelMapper modelMapper) {

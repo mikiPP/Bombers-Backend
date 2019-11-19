@@ -29,12 +29,12 @@ public class AuthenticationController {
     static final String SIGN_UP_PATH = "/sign-up";
     static final String LOGGED_OUT_PATH = "/logged-out";
 
-   private final AuthUserService authUserService;
+    private final AuthUserService authUserService;
 
-   @Autowired
-    public AuthenticationController(AuthUserService authUserService){
-       this.authUserService = authUserService;
-   }
+    @Autowired
+    public AuthenticationController(AuthUserService authUserService) {
+        this.authUserService = authUserService;
+    }
 
 
     @PostMapping(value = SIGN_UP_PATH)
@@ -44,8 +44,8 @@ public class AuthenticationController {
             @ApiResponse(code = 400, message = ApiConstants.BAD_REQUEST_MESSAGE, response = ApiError.class),
             @ApiResponse(code = 500, message = ApiConstants.INTERNAL_SERVER_ERROR_MESSAGE, response = ApiError.class)})
     public AuthUserDto signUp(@ApiParam(value = "AuthUserTests Creation data") @RequestBody @Valid AuthUserDto authUserDto) {
-      return this.authUserService.createAuthUser(authUserDto);
-   }
+        return this.authUserService.createAuthUser(authUserDto);
+    }
 
 
     @GetMapping(value = LOGGED_OUT_PATH)
@@ -55,9 +55,9 @@ public class AuthenticationController {
             @ApiResponse(code = 400, message = ApiConstants.BAD_REQUEST_MESSAGE, response = ApiError.class),
             @ApiResponse(code = 401, message = ApiConstants.UNAUTHORIZED, response = ApiError.class),
             @ApiResponse(code = 500, message = ApiConstants.INTERNAL_SERVER_ERROR_MESSAGE, response = ApiError.class)})
-    public String loggedOut(){
-       return "Has salido de la sessión correctamente";
-   }
+    public String loggedOut() {
+        return "Has salido de la sessión correctamente";
+    }
 
 
     /**

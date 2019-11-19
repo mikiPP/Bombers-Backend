@@ -5,9 +5,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import org.lasencinas.bombersauthentication.Model.Domain.Dni.Dni;
 
 @ApiModel
 @Getter
@@ -16,21 +16,22 @@ import org.lasencinas.bombersauthentication.Model.Domain.Dni.Dni;
 public class AuthUserDto {
 
 
-    @ApiModelProperty(value = "AuthUserTests id",example = "1")
+    @ApiModelProperty(value = "AuthUserTests id", example = "1")
     private Long id;
 
 
-    @ApiModelProperty(value = "AuthUserTests Dni",example = "dni:41533266-T")
+    @ApiModelProperty(value = "AuthUserTests Dni", example = "dni:41533266-T")
+    @NotNull
     private DniDto dni;
 
     @NotNull
     @NotEmpty
-    @ApiModelProperty(value = "AuthUserTests Email",example = "example@gmail.com")
+    @ApiModelProperty(value = "AuthUserTests Email", example = "example@gmail.com")
     private String email;
 
 
     @NotNull
     @NotEmpty
-    @ApiModelProperty(value = "AuthUserTests password",example = "ThePassword")
+    @ApiModelProperty(value = "AuthUserTests password", example = "ThePassword")
     private String password;
 }

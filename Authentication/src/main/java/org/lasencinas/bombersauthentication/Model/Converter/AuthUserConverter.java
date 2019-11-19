@@ -30,7 +30,7 @@ public class AuthUserConverter {
     }
 
 
-    public AuthUser toDomainModel(AuthUserDto userDto){
+    public AuthUser toDomainModel(AuthUserDto userDto) {
 
         AuthUser toDomainModel = new AuthUser();
 

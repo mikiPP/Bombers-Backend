@@ -8,8 +8,6 @@ import org.lasencinas.bombersauthentication.Model.Api.AuthUserDto;
 import org.lasencinas.bombersauthentication.Model.Converter.AuthUserConverter;
 import org.lasencinas.bombersauthentication.Model.Domain.AuthUser.AuthUser;
 import org.lasencinas.bombersauthentication.Model.Domain.Dni.Dni;
-import org.lasencinas.bombersauthentication.Repository.AuthUserRepository;
-import org.lasencinas.bombersauthentication.Repository.DniRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,24 +22,24 @@ import java.util.Optional;
 
 @NoArgsConstructor
 @Service("AuthUserService")
-@ConditionalOnProperty( name = "test.active", havingValue = "true" )
+@ConditionalOnProperty(name = "test.active", havingValue = "true")
 public class AuthUserMock implements AuthUserService {
 
     @Getter
-    private List<Dni> dnis = new ArrayList<>(Arrays.asList(new Dni("86854224Z"),new Dni("25108985T"),new Dni(
-            "45822494P")
-            ,new Dni("41038536G"),new Dni("52304534G")));
+    private List<Dni> dnis = new ArrayList<>(Arrays.asList(new Dni("86854224Z"), new Dni("25108985T"), new Dni(
+                    "45822494P")
+            , new Dni("41038536G"), new Dni("52304534G")));
 
     @Getter
     private List<AuthUser> authUsers = new ArrayList<>();
 
-    private  BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private AuthUserConverter authUserConverter;
 
 
     @Autowired
-    public AuthUserMock(BCryptPasswordEncoder bCryptPasswordEncoder,AuthUserConverter authUserConverter){
+    public AuthUserMock(BCryptPasswordEncoder bCryptPasswordEncoder, AuthUserConverter authUserConverter) {
 
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.authUserConverter = authUserConverter;
@@ -61,7 +59,7 @@ public class AuthUserMock implements AuthUserService {
 
         int dniPosition = getDniPosition(authUser.getDni().getDni());
 
-        Preconditions.checkArgument( dniPosition != -1,
+        Preconditions.checkArgument(dniPosition != -1,
                 "The Dni does not exist in the data base");
         Preconditions.checkArgument(getDnis().get(dniPosition).getUser() == null,
                 "The Dni has been used");
@@ -75,15 +73,14 @@ public class AuthUserMock implements AuthUserService {
     }
 
 
-
-    private AuthUser saveAuthUser(AuthUser authUser){
+    private AuthUser saveAuthUser(AuthUser authUser) {
 
         getAuthUsers().add(authUser);
 
         return authUser;
     }
 
-    private Dni saveDni(Dni dni){
+    private Dni saveDni(Dni dni) {
 
         int dniPosition = getDniPosition(dni.getDni());
 
@@ -97,13 +94,13 @@ public class AuthUserMock implements AuthUserService {
     }
 
 
-    private int getDniPosition (String dni) {
+    private int getDniPosition(String dni) {
 
         Optional<Dni> optionalDni = getDnis()
                 .stream()
                 .filter(dniFromList -> dniFromList.getDni().equals(dni))
                 .findFirst();
 
-        return (optionalDni.isPresent()) ? getDnis().indexOf(optionalDni.get()) : -1;
+        return optionalDni.isPresent() ? getDnis().indexOf(optionalDni.get()) : -1;
     }
 }

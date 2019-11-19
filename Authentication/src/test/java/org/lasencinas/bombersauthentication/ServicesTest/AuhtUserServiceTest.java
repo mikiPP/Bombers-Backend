@@ -23,7 +23,7 @@ public class AuhtUserServiceTest extends IntegrationTest {
 
     private int index = 0;
 
-    private List<String> dnis = Arrays.asList("86854224Z","25108985T","45822494P","41038536G","52304534G");
+    private List<String> dnis = Arrays.asList("86854224Z", "25108985T", "45822494P", "41038536G");
 
     @Autowired
     private AuthUserService authUserService;
@@ -32,14 +32,17 @@ public class AuhtUserServiceTest extends IntegrationTest {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-
-
     @Test
-    public void createAuthUserValidShouldReturnThatAuthUser (){
+    public void createAuthUserValidShouldReturnThatAuthUser() {
 
-       //-------------------Given-------------------//
+        //-------------------Given-------------------//
+
+        DniDto dni = new DniDto();
+        dni.setDni("52304534G");
+
 
         AuthUserDto authUserDto = createAuthUserDto();
+        authUserDto.setDni(dni);
 
         //-------------------When-------------------//
 
@@ -47,17 +50,17 @@ public class AuhtUserServiceTest extends IntegrationTest {
 
         //-------------------Then-------------------//
 
-        assertEquals(authUserDto.getEmail(),newAuthUser.getEmail());
-        assertEquals(authUserDto.getDni().getDni(),newAuthUser.getDni().getDni());
-        assertTrue(newAuthUser.getDni().getUserId() != null );
+        assertEquals(authUserDto.getEmail(), newAuthUser.getEmail());
+        assertEquals(authUserDto.getDni().getDni(), newAuthUser.getDni().getDni());
+        assertTrue(newAuthUser.getDni().getUserId() != null);
         assertTrue(authUserDto.getPassword() != newAuthUser.getPassword());
-        assertTrue(bCryptPasswordEncoder.matches(authUserDto.getPassword(),newAuthUser.getPassword()));
+        assertTrue(bCryptPasswordEncoder.matches(authUserDto.getPassword(), newAuthUser.getPassword()));
 
     }
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void createAuthUserThatDniIsNotInTheDBShouldReturnThatAuthUser (){
+    public void createAuthUserThatDniIsNotInTheDBShouldReturnThatAuthUser() {
 
         //-------------------Given-------------------//
 
@@ -66,7 +69,7 @@ public class AuhtUserServiceTest extends IntegrationTest {
 
         //-------------------When-------------------//
 
-        AuthUserDto newAuthUser = authUserService.createAuthUser(authUserDto);
+        authUserService.createAuthUser(authUserDto);
 
         //-------------------Then-------------------//
 
@@ -74,7 +77,7 @@ public class AuhtUserServiceTest extends IntegrationTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void createAuthUserThatDniIsUsedShouldReturnThatAuthUser (){
+    public void createAuthUserThatDniIsUsedShouldReturnThatAuthUser() {
 
         //-------------------Given-------------------//
 
@@ -98,7 +101,7 @@ public class AuhtUserServiceTest extends IntegrationTest {
         dni.setDni(dnis.get(index));
 
         authUserDto.setId(Id);
-        authUserDto.setEmail(String.format("test%s@test.com",Id));
+        authUserDto.setEmail(String.format("test%s@test.com", Id));
         authUserDto.setDni(dni);
         authUserDto.setPassword("Test" + Id);
 

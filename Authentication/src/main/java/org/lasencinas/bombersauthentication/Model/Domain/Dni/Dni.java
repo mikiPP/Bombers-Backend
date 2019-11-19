@@ -29,10 +29,9 @@ public class Dni implements java.io.Serializable {
     private String dni;
 
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER",unique = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "USER", unique = true)
     private AuthUser user;
-
 
 
     public Dni(String dni) {

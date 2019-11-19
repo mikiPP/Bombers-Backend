@@ -1,7 +1,6 @@
 package org.lasencinas.bombersauthentication.Service.AuthUser;
 
 
-
 import org.lasencinas.bombersauthentication.Api.Controller.Exception.ServiceException;
 import org.lasencinas.bombersauthentication.Model.Api.AuthUserDto;
 import org.lasencinas.bombersauthentication.Model.Converter.AuthUserConverter;
@@ -30,21 +29,21 @@ import static java.util.Collections.emptyList;
 
 
 @Service("AuthUserService")
-@ConditionalOnProperty( name = "test.active", havingValue = "false" )
+@ConditionalOnProperty(name = "test.active", havingValue = "false")
 public class AuthUserImplementation implements AuthUserService {
 
 
+    private final RestTemplate restTemplate;
     private AuthUserRepository authUserRepository;
     private DniRepository dniRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private AuthUserConverter authUserConverter;
-    private final RestTemplate restTemplate;
 
 
     @Autowired
-    public AuthUserImplementation (AuthUserRepository authUserRepository, DniRepository dniRepository,
-                                   BCryptPasswordEncoder bCryptPasswordEncoder, AuthUserConverter authUserConverter,
-                                   RestTemplateBuilder restTemplateBuilder) {
+    public AuthUserImplementation(AuthUserRepository authUserRepository, DniRepository dniRepository,
+                                  BCryptPasswordEncoder bCryptPasswordEncoder, AuthUserConverter authUserConverter,
+                                  RestTemplateBuilder restTemplateBuilder) {
 
         this.authUserRepository = authUserRepository;
         this.dniRepository = dniRepository;
@@ -64,9 +63,9 @@ public class AuthUserImplementation implements AuthUserService {
 
             response = this.restTemplate.exchange("http://localhost:8080/api/dni?dni=" + authUserDto.getDni(),
                     HttpMethod.GET, filterHttpEntity,
-                Boolean.class);
+                    Boolean.class);
 
-        }catch (HttpServerErrorException | HttpClientErrorException ex) {
+        } catch (HttpServerErrorException | HttpClientErrorException ex) {
             throw new ServiceException.Builder(HttpStatus.INTERNAL_SERVER_ERROR.toString())
                     .withMessage("Error while validating DNI. ")
                     .withCause(ex)
@@ -84,18 +83,17 @@ public class AuthUserImplementation implements AuthUserService {
     }
 
 
-
     // Realmente busca por email pero el método es el implementado por la interfaz user details por eso ese nombre
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         Optional<AuthUser> user = this.authUserRepository.findByEmail(email);
 
-         if(user.isPresent()){
+        if (user.isPresent()) {
 
             return new org.springframework.security.core.userdetails.User(user.get().getEmail(),
                     user.get().getPassword(),
-                     emptyList());
+                    emptyList());
         }
 
         throw new UsernameNotFoundException(user.get().getEmail());

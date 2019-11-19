@@ -41,7 +41,7 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
-                .additionalModels(typeResolver.resolve(AuthUser.class),typeResolver.resolve(Dni.class))
+                .additionalModels(typeResolver.resolve(AuthUser.class), typeResolver.resolve(Dni.class))
                 .globalOperationParameters(apiParameters())
                 .ignoredParameterTypes(Link.class, ModelAndView.class,
                         WebMvcProperties.View.class, Map.class);

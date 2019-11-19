@@ -26,9 +26,6 @@ import static org.lasencinas.bombersauthentication.Security.SecurityConstants.VA
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    private AuthUserService userService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     private static final String[] AUTH_WHITELIST = {
             // -- swagger ui
             "/v2/api-docs",
@@ -44,6 +41,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
             VALIDATE_DNI_URL
 
     };
+    private AuthUserService userService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public WebSecurity(AuthUserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {

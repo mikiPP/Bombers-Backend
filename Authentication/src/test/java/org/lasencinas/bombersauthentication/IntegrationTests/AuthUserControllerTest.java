@@ -26,7 +26,7 @@ public class AuthUserControllerTest extends IntegrationTest {
 
     private int index = 0;
 
-    private List<String> dnis = Arrays.asList("86854224Z","25108985T","45822494P","41038536G","52304534G");
+    private List<String> dnis = Arrays.asList("86854224Z", "25108985T", "45822494P", "41038536G", "52304534G");
 
     @Test
     public void createAAuthUserShouldReturnTheSameAuthUser() throws Exception {
@@ -48,7 +48,7 @@ public class AuthUserControllerTest extends IntegrationTest {
         /*-------------------------- Then  --------------------------*/
 
         assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
-        assertTrue(authUserDto instanceof  AuthUserDto);
+        assertTrue(authUserDto instanceof AuthUserDto);
     }
 
 
@@ -83,7 +83,7 @@ public class AuthUserControllerTest extends IntegrationTest {
         dni.setDni(dnis.get(index));
 
         authUserDto.setId(Id);
-        authUserDto.setEmail(String.format("test%s@test.com",Id));
+        authUserDto.setEmail(String.format("test%s@test.com", Id));
         authUserDto.setDni(dni);
         authUserDto.setPassword("Test" + Id);
 
@@ -92,9 +92,6 @@ public class AuthUserControllerTest extends IntegrationTest {
 
         return authUserDto;
     }
-
-
-
 
 
     @Override
