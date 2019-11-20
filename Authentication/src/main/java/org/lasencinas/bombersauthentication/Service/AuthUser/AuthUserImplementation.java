@@ -9,6 +9,7 @@ import org.lasencinas.bombersauthentication.Model.Domain.Dni.Dni;
 import org.lasencinas.bombersauthentication.Repository.AuthUserRepository;
 import org.lasencinas.bombersauthentication.Repository.DniRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -39,6 +40,8 @@ public class AuthUserImplementation implements AuthUserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private AuthUserConverter authUserConverter;
 
+    @Value("${environment}")
+    private String environment;
 
     @Autowired
     public AuthUserImplementation(AuthUserRepository authUserRepository, DniRepository dniRepository,
@@ -59,27 +62,28 @@ public class AuthUserImplementation implements AuthUserService {
         HttpEntity<String> filterHttpEntity = new HttpEntity<>(new String());
         ResponseEntity<Boolean> response;
 
+
         try {
 
-            response = this.restTemplate.exchange("http://localhost:8080/api/dni?dni=" + authUserDto.getDni(),
+            response = this.restTemplate.exchange(environment + "/dni?dni=" + authUserDto.getDni().getDni(),
                     HttpMethod.GET, filterHttpEntity,
                     Boolean.class);
 
         } catch (HttpServerErrorException | HttpClientErrorException ex) {
             throw new ServiceException.Builder(HttpStatus.INTERNAL_SERVER_ERROR.toString())
-                    .withMessage("Error while validating DNI. ")
+                    .withMessage("Error while validating DNI... ")
                     .withCause(ex)
                     .build();
+
         }
 
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            user.getDni().setAuthUser(user);
 
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.getDni().setUser(user);
+            Dni dni = dniRepository.save(user.getDni());
+            user.setId(dni.getAuthUser().getId());
 
-        Dni dni = dniRepository.save(user.getDni());
-        user.setId(dni.getUser().getId());
-
-        return authUserConverter.toApiModel(user);
+            return authUserConverter.toApiModel(user);
     }
 
 

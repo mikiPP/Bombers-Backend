@@ -61,11 +61,11 @@ public class AuthUserMock implements AuthUserService {
 
         Preconditions.checkArgument(dniPosition != -1,
                 "The Dni does not exist in the data base");
-        Preconditions.checkArgument(getDnis().get(dniPosition).getUser() == null,
+        Preconditions.checkArgument(getDnis().get(dniPosition).getAuthUser() == null,
                 "The Dni has been used");
 
         authUser.setPassword(bCryptPasswordEncoder.encode(authUser.getPassword()));
-        authUser.getDni().setUser(authUser);
+        authUser.getDni().setAuthUser(authUser);
 
         saveDni(authUser.getDni());
 

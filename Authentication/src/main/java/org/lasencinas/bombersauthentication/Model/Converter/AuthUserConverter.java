@@ -39,7 +39,7 @@ public class AuthUserConverter {
         toDomainModel.setEmail(userDto.getEmail());
 
         Dni dni = new Dni();
-        dni.setUser(toDomainModel);
+        dni.setAuthUser(toDomainModel);
         dni.setDni(userDto.getDni().getDni());
 
         toDomainModel.setDni(dni);

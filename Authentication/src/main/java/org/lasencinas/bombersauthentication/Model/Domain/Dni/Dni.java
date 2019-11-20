@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "dni", uniqueConstraints = @UniqueConstraint(columnNames = {"dni", "USER"}))
+@Table(name = "dni", uniqueConstraints = @UniqueConstraint(columnNames = {"dni", "AUTH_USER"}))
 public class Dni implements java.io.Serializable {
 
 
@@ -30,8 +30,8 @@ public class Dni implements java.io.Serializable {
 
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER", unique = true)
-    private AuthUser user;
+    @JoinColumn(name = "AUTH_USER", unique = true)
+    private AuthUser authUser;
 
 
     public Dni(String dni) {

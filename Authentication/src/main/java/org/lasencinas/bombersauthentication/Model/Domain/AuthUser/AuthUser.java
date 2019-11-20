@@ -32,7 +32,7 @@ public class AuthUser {
     @Column(name = "ID", unique = true)
     private Long id;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "authUser", fetch = FetchType.LAZY)
     @JoinColumn(name = "dni")
     private Dni dni;
 

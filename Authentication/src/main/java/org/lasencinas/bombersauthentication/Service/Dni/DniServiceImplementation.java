@@ -32,7 +32,7 @@ public class DniServiceImplementation implements DniService {
         Preconditions.checkArgument(dniRepository.findById(dni).isPresent(),
                 "The Dni does not exist in the data base");
 
-        Preconditions.checkArgument(dniRepository.findById(dni).get().getUser() == null,
+        Preconditions.checkArgument(dniRepository.findById(dni).get().getAuthUser() == null,
                 "The Dni has been used");
 
         return true;

@@ -13,7 +13,7 @@ public class DniConverter {
         DniDto toApiModel = new DniDto();
 
         toApiModel.setDni(dni.getDni());
-        toApiModel.setUserId(dni.getUser().getId());
+        toApiModel.setUserId(dni.getAuthUser().getId());
 
         return toApiModel;
     }

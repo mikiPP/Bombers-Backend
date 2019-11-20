@@ -27,7 +27,7 @@ public class DniServiceMock implements DniService {
         Preconditions.checkArgument(this.findById(dni).isPresent(),
                 "The Dni does not exist in the data base");
 
-        Preconditions.checkArgument(this.findById(dni).get().getUser() == null,
+        Preconditions.checkArgument(this.findById(dni).get().getAuthUser() == null,
                 "The Dni has been used");
 
         return true;
