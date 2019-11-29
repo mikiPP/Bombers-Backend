@@ -1,4 +1,5 @@
 SIMULACIONES
+
 	- Botón exportar detrás de selector de "Grupo de facturación", alinear correctamente.
 	- Cuando sale el error "Revise los campos en rojo", ningún campo se marca en rojo (tampoco lo hacía antes)
 	- En el detalle de la reserva (Editar reserva -> Continuar)
@@ -6,6 +7,7 @@ SIMULACIONES
 		- Pendiente de Pago e Importe Total no tienen un margen inferior y aparecen pegados al bloque de conceptos.
 		
 RESERVAS
+
 	- En el detalle de la reserva (Editar reserva -> Continuar)
 		- El selector de tipo de Extras está descolocado y al desplegarlo no se ven las opciones que no están marcadas
 		-En crear/editar reserva el header debería ir pegado con el body
@@ -125,4 +127,5 @@ Informes
 	
 		
 Documentación
+
 		-No esta maquetado.
