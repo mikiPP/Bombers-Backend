@@ -2,6 +2,7 @@ package org.lasencinas.bombersauthentication.Security;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.lasencinas.bombersauthentication.Model.Domain.AuthUser.AuthUser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -55,10 +56,15 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
 
+        // TODO: CHANGE DNI TO NAME WHEN THE USER OBJECT HAS BEEN CREATED.
+
         String token = JWT.create()
-                .withSubject(((User) auth.getPrincipal()).getUsername())
+                .withSubject("{ 'Email': '" + ((User) auth.getPrincipal()).getUsername() + "'}")
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(SECRET.getBytes()));
+
+        res.addHeader("Access-Control-Expose-Headers", HEADER_STRING);
+        res.addHeader("Access-Control-Allow-Headers", "Authorization, X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept, X-Custom-header");
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
     }
 }

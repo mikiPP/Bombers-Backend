@@ -60,12 +60,9 @@ public class AuthUserImplementation implements AuthUserService {
 
         AuthUser user = authUserConverter.toDomainModel(authUserDto);
         HttpEntity<String> filterHttpEntity = new HttpEntity<>(new String());
-        ResponseEntity<Boolean> response;
-
 
         try {
-
-            response = this.restTemplate.exchange(environment + "/dni?dni=" + authUserDto.getDni().getDni(),
+            this.restTemplate.exchange(environment + "/dni?dni=" + authUserDto.getDni().getDni(),
                     HttpMethod.GET, filterHttpEntity,
                     Boolean.class);
 
