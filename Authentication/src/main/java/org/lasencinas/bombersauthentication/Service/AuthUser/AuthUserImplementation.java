@@ -31,8 +31,7 @@ import static java.util.Collections.emptyList;
 @Service("AuthUserService")
 @ConditionalOnProperty(name = "test.active", havingValue = "false")
 public class AuthUserImplementation implements AuthUserService {
-
-
+    
     private final RestTemplate restTemplate;
     private AuthUserRepository authUserRepository;
     private DniRepository dniRepository;
@@ -58,20 +57,8 @@ public class AuthUserImplementation implements AuthUserService {
     public AuthUserDto createAuthUser(AuthUserDto authUserDto) {
 
         AuthUser user = authUserConverter.toDomainModel(authUserDto);
-        HttpEntity<String> filterHttpEntity = new HttpEntity<>(new String());
 
-        try {
-            this.restTemplate.exchange(environment + "/dni?dni=" + authUserDto.getDni().getDni(),
-                    HttpMethod.GET, filterHttpEntity,
-                    Boolean.class);
-
-        } catch (HttpServerErrorException | HttpClientErrorException ex) {
-            throw new ServiceException.Builder(HttpStatus.INTERNAL_SERVER_ERROR.toString())
-                    .withMessage("Error while validating DNI... ")
-                    .withCause(ex)
-                    .build();
-
-        }
+        validateUserDni(authUserDto.getDni().getDni());
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.getDni().setAuthUser(user);
@@ -81,7 +68,6 @@ public class AuthUserImplementation implements AuthUserService {
 
         return authUserConverter.toApiModel(user);
     }
-
 
     // In fact search by email but the name is given by the userDetails interface.
     @Override
@@ -98,4 +84,23 @@ public class AuthUserImplementation implements AuthUserService {
 
         throw new UsernameNotFoundException(user.get().getEmail());
     }
+
+    private void validateUserDni(String dni) {
+
+        HttpEntity<String> filterHttpEntity = new HttpEntity<>("");
+
+        try {
+            this.restTemplate.exchange(environment + "/dni?dni=" + dni,
+                    HttpMethod.GET, filterHttpEntity,
+                    Boolean.class);
+
+        } catch (HttpServerErrorException | HttpClientErrorException ex) {
+            throw new ServiceException.Builder(HttpStatus.INTERNAL_SERVER_ERROR.toString())
+                    .withMessage("Error while validating DNI... ")
+                    .withCause(ex)
+                    .build();
+
+        }
+    }
+
 }
