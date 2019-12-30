@@ -1,22 +1,14 @@
 package org.lasencinas.bombersauthentication.Api.Controller.Auth;
 
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.lasencinas.bombersauthentication.Api.ApiConstants;
 import org.lasencinas.bombersauthentication.Api.Controller.Exception.ApiError;
 import org.lasencinas.bombersauthentication.Model.Api.AuthUserDto;
 import org.lasencinas.bombersauthentication.Model.Domain.AuthUser.AuthUser;
 import org.lasencinas.bombersauthentication.Service.AuthUser.AuthUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -40,7 +32,7 @@ public class AuthenticationController {
     @PostMapping(value = SIGN_UP_PATH)
     @ApiOperation(value = "Create an user")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Authentication OK", response = AuthUser.class),
+            @ApiResponse(code = 201, message = "User created", response = AuthUser.class),
             @ApiResponse(code = 400, message = ApiConstants.BAD_REQUEST_MESSAGE, response = ApiError.class),
             @ApiResponse(code = 500, message = ApiConstants.INTERNAL_SERVER_ERROR_MESSAGE, response = ApiError.class)})
     public AuthUserDto signUp(@ApiParam(value = "AuthUserTests Creation data") @RequestBody @Valid AuthUserDto authUserDto) {

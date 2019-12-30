@@ -15,7 +15,6 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -74,17 +73,17 @@ public class AuthUserImplementation implements AuthUserService {
 
         }
 
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            user.getDni().setAuthUser(user);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.getDni().setAuthUser(user);
 
-            Dni dni = dniRepository.save(user.getDni());
-            user.setId(dni.getAuthUser().getId());
+        Dni dni = dniRepository.save(user.getDni());
+        user.setId(dni.getAuthUser().getId());
 
-            return authUserConverter.toApiModel(user);
+        return authUserConverter.toApiModel(user);
     }
 
 
-    // Realmente busca por email pero el método es el implementado por la interfaz user details por eso ese nombre
+    // In fact search by email but the name is given by the userDetails interface.
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 

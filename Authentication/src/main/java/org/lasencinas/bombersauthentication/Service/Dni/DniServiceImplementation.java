@@ -12,7 +12,6 @@ public class DniServiceImplementation implements DniService {
 
     private final DniRepository dniRepository;
 
-
     @Autowired
     DniServiceImplementation(DniRepository dniRepository) {
         this.dniRepository = dniRepository;
@@ -20,8 +19,8 @@ public class DniServiceImplementation implements DniService {
 
 
     /**
-     * This method will return true (then the dni is valid) when dni is in the database
-     * and don't have any user associated yet.
+     * This method will return true  if the dni is in  the database and is  have not been already used,
+     * else  will throw exception
      *
      * @param dni String
      * @return Boolean

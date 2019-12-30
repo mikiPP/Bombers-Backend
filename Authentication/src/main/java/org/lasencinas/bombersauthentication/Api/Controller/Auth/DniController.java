@@ -22,7 +22,7 @@ public class DniController {
     }
 
 
-    @GetMapping()
+    @GetMapping
     public Boolean validateDni(@RequestParam String dni) {
         return dniService.validateDni(dni);
     }

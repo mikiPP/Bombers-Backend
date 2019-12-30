@@ -46,7 +46,7 @@ public class AuthUserMock implements AuthUserService {
 
     }
 
-
+    //this method will be not tested because is used by spring.
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return null;

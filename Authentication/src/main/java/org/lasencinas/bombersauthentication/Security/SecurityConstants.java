@@ -12,5 +12,4 @@ public final class SecurityConstants {
     static final String VALIDATE_DNI_URL = "/**";
 
 
-
 }

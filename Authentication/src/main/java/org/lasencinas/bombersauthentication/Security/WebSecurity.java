@@ -16,10 +16,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import static org.lasencinas.bombersauthentication.Security.SecurityConstants.LOGGED_OUT_URL;
-import static org.lasencinas.bombersauthentication.Security.SecurityConstants.LOGGIN_URL;
-import static org.lasencinas.bombersauthentication.Security.SecurityConstants.SIGN_UP_URL;
-import static org.lasencinas.bombersauthentication.Security.SecurityConstants.VALIDATE_DNI_URL;
+import static org.lasencinas.bombersauthentication.Security.SecurityConstants.*;
 
 @Configuration
 @EnableWebSecurity

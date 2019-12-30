@@ -14,9 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.lasencinas.bombersauthentication.Security.SecurityConstants.HEADER_STRING;
-import static org.lasencinas.bombersauthentication.Security.SecurityConstants.SECRET;
-import static org.lasencinas.bombersauthentication.Security.SecurityConstants.TOKEN_PREFIX;
+import static org.lasencinas.bombersauthentication.Security.SecurityConstants.*;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 

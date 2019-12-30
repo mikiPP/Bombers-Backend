@@ -2,7 +2,6 @@ package org.lasencinas.bombersauthentication.Security;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.lasencinas.bombersauthentication.Model.Domain.AuthUser.AuthUser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,10 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
-import static org.lasencinas.bombersauthentication.Security.SecurityConstants.EXPIRATION_TIME;
-import static org.lasencinas.bombersauthentication.Security.SecurityConstants.HEADER_STRING;
-import static org.lasencinas.bombersauthentication.Security.SecurityConstants.SECRET;
-import static org.lasencinas.bombersauthentication.Security.SecurityConstants.TOKEN_PREFIX;
+import static org.lasencinas.bombersauthentication.Security.SecurityConstants.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
