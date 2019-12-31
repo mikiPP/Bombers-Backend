@@ -34,12 +34,7 @@
             <artifactId>commons-lang3</artifactId>
             <version>${apache.commons.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.mpp</groupId>
-            <artifactId>bombers</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
+
 
     </dependencies>
 
