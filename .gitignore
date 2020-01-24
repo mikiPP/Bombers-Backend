@@ -21,3 +21,14 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+.idea/
+bombers-parent/mvnw
+*.cmd
+bombers-parent/.mvn/wrapper/MavenWrapperDownloader.java
+bombers-parent/commons/mvnw
+bombers-parent/commons/.mvn/wrapper/maven-wrapper.properties
+bombers-parent/commons/.mvn/wrapper/maven-wrapper.jar
+bombers-parent/commons/.gitignore
+bombers-parent/.mvn/wrapper/maven-wrapper.properties
+bombers-parent/.mvn/wrapper/maven-wrapper.jar
+bombers-parent/commons/.mvn/wrapper/MavenWrapperDownloader.java
