@@ -1,12 +1,10 @@
 package org.lasencinas.dni.Api;
 
 
+import org.lasencinas.dni.Model.Api.DniDto;
 import org.lasencinas.dni.Service.DniService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(DniController.API_DNI_PATH)
@@ -25,6 +23,11 @@ public class DniController {
     @GetMapping
     public Boolean validateDni(@RequestParam String dni) {
         return dniService.validateDni(dni);
+    }
+
+    @PutMapping
+    public DniDto updateDni(@RequestParam String dni, @RequestParam Long id) {
+        return dniService.updateDni(dni,id);
     }
 
 

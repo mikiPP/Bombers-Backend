@@ -18,9 +18,12 @@
 
     <properties>
 
+        <apache.commons.version>3.4</apache.commons.version>
         <java.version>1.8</java.version>
         <spring-boot-starter-actuator>2.1.3.RELEASE</spring-boot-starter-actuator>
         <project.version>0.0.1-SNAPSHOT</project.version>
+        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+        <swagger.version>1.5.22</swagger.version>
 
     </properties>
 
@@ -73,12 +76,31 @@
             <version>2.3.0</version>
         </dependency>
 
-        <!--       MySQL DEPENDENCIES!      -->
 
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.5</version>
+        </dependency>
+
+        <!--       SWAGGER DEPENDENCIES!      -->
+
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-swagger2.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox-swagger2.version}</version>
         </dependency>
 
 
@@ -90,25 +112,14 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- MODULES DEPENDENCIES ! -->
+        <!-- APACHE COMMONS DEPENDENCIES ! -->
 
         <dependency>
-            <groupId>com.mpp</groupId>
-            <artifactId>Bomber</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache.commons.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.mpp</groupId>
-            <artifactId>Dni</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mpp</groupId>
-            <artifactId>commons</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
 
     </dependencies>

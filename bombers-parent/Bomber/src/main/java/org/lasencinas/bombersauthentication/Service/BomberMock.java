@@ -53,7 +53,7 @@ public class BomberMock implements BomberService {
     }
 
     @Override
-    public BomberDto createAuthUser(BomberDto bomberDto) {
+    public BomberDto insertBomber(BomberDto bomberDto) {
 
         org.lasencinas.bombersauthentication.Model.Domain.AuthUser.Bomber bomber = bomberConverter.toDomainModel(bomberDto);
 

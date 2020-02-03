@@ -1,5 +1,6 @@
 package org.lasencinas.dni.Model.Api;
 
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -22,6 +23,6 @@ public class DniDto {
 
 
     @ApiModelProperty(value = "Dni owner ID")
-    private Long userId;
+    private Long bomberId;
 
 }

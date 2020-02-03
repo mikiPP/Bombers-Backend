@@ -1,10 +1,9 @@
-package org.lasencinas.bombersauthentication.Model.Domain.AuthUser;
+package org.lasencinas.bombersauthentication.Model.Domain;
 
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.lasencinas.dni.Model.Domain.Dni.Dni;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -24,9 +23,8 @@ public class Bomber {
     @Column(name = "ID", unique = true)
     private Long id;
 
-    @OneToOne(mappedBy = "bomber", fetch = FetchType.LAZY)
-    @JoinColumn(name = "dni")
-    private Dni dni;
+    @Column(name= "Dni")
+    private String dni;
 
 
     @Column(name = "EMAIL", unique = true)
@@ -51,7 +49,7 @@ public class Bomber {
 //        this.email = email;
 //    }
 
-    public Bomber(Dni dni, String password) {
+    public Bomber(String dni, String password) {
         this.password = password;
         this.dni = dni;
     }

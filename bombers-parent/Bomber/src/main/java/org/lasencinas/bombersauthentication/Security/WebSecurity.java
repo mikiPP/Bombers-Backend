@@ -1,4 +1,4 @@
-package com.mpp.commons.Security;
+package org.lasencinas.bombersauthentication.Security;
 
 
 import org.lasencinas.bombersauthentication.Service.BomberService;
@@ -16,8 +16,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import static com.mpp.commons.Security.SecurityConstants.*;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -33,9 +31,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
             "/swagger-ui.html",
             "/webjars/**",
             //  public endpoints of my API
-            SIGN_UP_URL,
-            LOGGIN_URL,
-            VALIDATE_DNI_URL
+            SecurityConstants.SIGN_UP_URL,
+            SecurityConstants.LOGGIN_URL,
+            SecurityConstants.VALIDATE_DNI_URL
 
     };
     private BomberService userService;
@@ -59,7 +57,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .logout()
                 .deleteCookies()
                 .invalidateHttpSession(true)
-                .logoutSuccessUrl(LOGGED_OUT_URL)
+                .logoutSuccessUrl(SecurityConstants.LOGGED_OUT_URL)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

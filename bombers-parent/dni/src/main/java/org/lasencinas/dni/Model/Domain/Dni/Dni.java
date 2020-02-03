@@ -19,13 +19,16 @@ public class Dni implements java.io.Serializable {
     @Column(name = "dni")
     private String dni;
 
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "bomber", unique = true)
-    private org.lasencinas.bombersauthentication.Model.Domain.AuthUser.Bomber bomber;
+    @Column(name = "Bomber_ID")
+    private Long bomberId;
 
 
     public Dni(String dni) {
         this.dni = dni;
+    }
+
+    public Dni(String dni,Long bomberId) {
+        this.dni = dni;
+        this.bomberId = bomberId;
     }
 }

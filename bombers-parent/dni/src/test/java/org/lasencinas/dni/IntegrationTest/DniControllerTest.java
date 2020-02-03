@@ -1,9 +1,11 @@
 package org.lasencinas.dni.IntegrationTest;
 
+
 import com.mpp.commons.test.IntegrationTest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.lasencinas.dni.Model.Api.DniDto;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -65,6 +67,61 @@ public class DniControllerTest extends IntegrationTest {
         /*-------------------------- Then  --------------------------*/
 
         Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), mvcResult.getResponse().getStatus());
+
+    }
+
+    @Test
+    public void updateValidDniShouldDniDto() throws Exception {
+
+        /*-------------------------- Given  --------------------------*/
+
+
+        String dni = dnis.get(index);
+        Long id = 2L;
+
+        /*-------------------------- When  --------------------------*/
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/dni?dni=" + dni + "&id=" + id)
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+
+        String content = mvcResult.getResponse().getContentAsString();
+
+        DniDto response = super.mapFromJson(content, DniDto.class);
+
+
+        /*-------------------------- Then  --------------------------*/
+
+        Assert.assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
+        Assert.assertTrue(response instanceof DniDto);
+        index++;
+    }
+
+
+    @Test
+    public void updateInvalidDniShouldReturnAnError() throws  Exception {
+
+        /*-------------------------- Given  --------------------------*/
+
+        String dni = "41038536";
+        Long id = 1L;
+
+
+        /*-------------------------- When  --------------------------*/
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put("/dni?dni=" + dni +"&id=" + id)
+                .contentType(MediaType.APPLICATION_JSON)).andReturn();
+
+
+
+        String content = mvcResult.getResponse().getContentAsString();
+
+
+
+        /*-------------------------- Then  --------------------------*/
+
+        Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), mvcResult.getResponse().getStatus());
+
+
 
     }
 

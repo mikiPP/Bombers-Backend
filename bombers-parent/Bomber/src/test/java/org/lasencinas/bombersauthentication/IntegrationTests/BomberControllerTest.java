@@ -80,12 +80,10 @@ public class BomberControllerTest extends IntegrationTest {
     private BomberDto createAuthUserDto() {
 
         BomberDto bomberDto = new BomberDto();
-        DniDto dni = new DniDto();
-        dni.setDni(dnis.get(index));
 
         bomberDto.setId(Id);
         bomberDto.setEmail(String.format("test%s@test.com", Id));
-        bomberDto.setDni(dni);
+        bomberDto.setDni(dnis.get(index));
         bomberDto.setPassword("Test" + Id);
 
         Id++;

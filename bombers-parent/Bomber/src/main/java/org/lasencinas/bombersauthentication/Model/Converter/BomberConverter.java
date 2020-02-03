@@ -1,8 +1,8 @@
 package org.lasencinas.bombersauthentication.Model.Converter;
 
 import org.lasencinas.bombersauthentication.Model.Api.BomberDto;
+import org.lasencinas.bombersauthentication.Model.Domain.Bomber;
 import org.lasencinas.dni.Model.Converter.DniConverter;
-import org.lasencinas.dni.Model.Domain.Dni.Dni;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,32 +17,29 @@ public class BomberConverter {
     }
 
 
-    public BomberDto toApiModel(org.lasencinas.bombersauthentication.Model.Domain.AuthUser.Bomber user) {
+    public BomberDto toApiModel(Bomber bomber) {
 
         BomberDto toApiModel = new BomberDto();
 
-        toApiModel.setId(user.getId());
-        toApiModel.setDni(dniConverter.toApiModel(user.getDni()));
-        toApiModel.setEmail(user.getEmail());
-        toApiModel.setPassword(user.getPassword());
+        toApiModel.setId(bomber.getId());
+        toApiModel.setDni(bomber.getDni());
+        toApiModel.setEmail(bomber.getEmail());
+        toApiModel.setPassword(bomber.getPassword());
 
         return toApiModel;
     }
 
 
-    public org.lasencinas.bombersauthentication.Model.Domain.AuthUser.Bomber toDomainModel(BomberDto userDto) {
+    public org.lasencinas.bombersauthentication.Model.Domain.
 
-        org.lasencinas.bombersauthentication.Model.Domain.AuthUser.Bomber toDomainModel = new org.lasencinas.bombersauthentication.Model.Domain.AuthUser.Bomber();
+            Bomber toDomainModel(BomberDto bomberDto) {
 
-        toDomainModel.setId(userDto.getId());
-        toDomainModel.setPassword(userDto.getPassword());
-        toDomainModel.setEmail(userDto.getEmail());
+        Bomber toDomainModel = new Bomber();
 
-        Dni dni = new Dni();
-        dni.setBomber(toDomainModel);
-        dni.setDni(userDto.getDni().getDni());
-
-        toDomainModel.setDni(dni);
+        toDomainModel.setId(bomberDto.getId());
+        toDomainModel.setPassword(bomberDto.getPassword());
+        toDomainModel.setEmail(bomberDto.getEmail());
+        toDomainModel.setDni(bomberDto.getDni());
 
         return toDomainModel;
     }

@@ -3,6 +3,7 @@ package org.lasencinas.bombersauthentication.Api.Controller;
 
 import com.mpp.commons.Api.ApiConstants;
 import com.mpp.commons.Api.Exception.ApiError;
+import com.mpp.commons.Exception.InvalidDniException;
 import io.swagger.annotations.*;
 import org.lasencinas.bombersauthentication.Model.Api.BomberDto;
 import org.lasencinas.bombersauthentication.Service.BomberService;
@@ -34,8 +35,8 @@ public class BomberController {
             @ApiResponse(code = 201, message = "User created", response = org.lasencinas.bombersauthentication.Model.Domain.AuthUser.Bomber.class),
             @ApiResponse(code = 400, message = ApiConstants.BAD_REQUEST_MESSAGE, response = ApiError.class),
             @ApiResponse(code = 500, message = ApiConstants.INTERNAL_SERVER_ERROR_MESSAGE, response = ApiError.class)})
-    public BomberDto signUp(@ApiParam(value = "AuthUserTests Creation data") @RequestBody @Valid BomberDto bomberDto) {
-        return this.bomberService.createAuthUser(bomberDto);
+    public BomberDto signUp(@ApiParam(value = "AuthUserTests Creation data") @RequestBody @Valid BomberDto bomberDto) throws InvalidDniException {
+        return this.bomberService.insertBomber(bomberDto);
     }
 
 

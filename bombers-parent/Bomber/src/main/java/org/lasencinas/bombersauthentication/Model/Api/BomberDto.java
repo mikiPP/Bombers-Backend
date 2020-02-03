@@ -23,7 +23,7 @@ public class BomberDto {
 
     @ApiModelProperty(value = "AuthUserTests Dni", example = "dni:41533266-T")
     @NotNull
-    private DniDto dni;
+    private String dni;
 
     @NotNull
     @NotEmpty

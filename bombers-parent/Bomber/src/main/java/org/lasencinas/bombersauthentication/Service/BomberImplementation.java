@@ -1,19 +1,18 @@
 package org.lasencinas.bombersauthentication.Service;
 
 
-import com.mpp.commons.Api.Exception.ServiceException;
+import com.mpp.commons.Exception.InvalidDniException;
 import org.lasencinas.bombersauthentication.Model.Api.BomberDto;
 import org.lasencinas.bombersauthentication.Model.Converter.BomberConverter;
+import org.lasencinas.bombersauthentication.Model.Domain.Bomber;
 import org.lasencinas.bombersauthentication.Repository.BomberRepository;
-import org.lasencinas.dni.Model.Domain.Dni.Dni;
-import org.lasencinas.dni.Repository.DniRepository;
+import org.lasencinas.dni.Model.Api.DniDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,7 +33,6 @@ public class BomberImplementation implements BomberService {
 
     private final RestTemplate restTemplate;
     private BomberRepository bomberRepository;
-    private DniRepository dniRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private BomberConverter bomberConverter;
 
@@ -42,38 +40,36 @@ public class BomberImplementation implements BomberService {
     private String environment;
 
     @Autowired
-    public BomberImplementation(BomberRepository bomberRepository, DniRepository dniRepository,
+    public BomberImplementation(BomberRepository bomberRepository,
                                 BCryptPasswordEncoder bCryptPasswordEncoder, BomberConverter bomberConverter,
                                 RestTemplateBuilder restTemplateBuilder) {
 
         this.bomberRepository = bomberRepository;
-        this.dniRepository = dniRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.bomberConverter = bomberConverter;
         this.restTemplate = restTemplateBuilder.build();
     }
 
 
-    public BomberDto createAuthUser(BomberDto bomberDto) {
+    public BomberDto insertBomber(BomberDto bomberDto) throws InvalidDniException {
 
-        org.lasencinas.bombersauthentication.Model.Domain.AuthUser.Bomber user = bomberConverter.toDomainModel(bomberDto);
+        validateUserDni(bomberDto.getDni());
 
-        validateUserDni(bomberDto.getDni().getDni());
+        Bomber bomber = bomberConverter.toDomainModel(bomberDto);
+        bomber.setPassword(bCryptPasswordEncoder.encode(bomber.getPassword()));
 
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.getDni().setBomber(user);
+        bomberDto = bomberConverter.toApiModel(bomber);
+        updateDni(bomberDto.getDni(), bomberDto.getId());
 
-        Dni dni = dniRepository.save(user.getDni());
-        user.setId(dni.getBomber().getId());
 
-        return bomberConverter.toApiModel(user);
+        return bomberDto;
     }
 
     // In fact search by email but the name is given by the userDetails interface.
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Optional<org.lasencinas.bombersauthentication.Model.Domain.AuthUser.Bomber> user = this.bomberRepository.findByEmail(email);
+        Optional<org.lasencinas.bombersauthentication.Model.Domain.Bomber> user = this.bomberRepository.findByEmail(email);
 
         if (user.isPresent()) {
 
@@ -85,7 +81,7 @@ public class BomberImplementation implements BomberService {
         throw new UsernameNotFoundException(user.get().getEmail());
     }
 
-    private void validateUserDni(String dni) {
+    private void validateUserDni(String dni) throws InvalidDniException {
 
         HttpEntity<String> filterHttpEntity = new HttpEntity<>("");
 
@@ -95,11 +91,20 @@ public class BomberImplementation implements BomberService {
                     Boolean.class);
 
         } catch (HttpServerErrorException | HttpClientErrorException ex) {
-            throw new ServiceException.Builder(HttpStatus.INTERNAL_SERVER_ERROR.toString())
-                    .withMessage("Error while validating DNI... ")
-                    .withCause(ex)
-                    .build();
+            throw new InvalidDniException("Error while validate dni: " + dni);
+        }
+    }
 
+    private void updateDni(String dni, Long id) throws InvalidDniException {
+
+        HttpEntity<String> filterHttpEntity = new HttpEntity<>("");
+        try {
+            this.restTemplate.exchange(environment + "/dni?dni" + dni + "&id=" + id,
+                    HttpMethod.PUT, filterHttpEntity,
+                    DniDto.class);
+
+        } catch (HttpServerErrorException | HttpClientErrorException ex) {
+            throw new InvalidDniException("Error while validate dni: " + dni);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.mpp.commons.Configuration;
+package org.lasencinas.bombersauthentication.Configuration;
 
 import com.fasterxml.classmate.TypeResolver;
 import com.google.common.base.Predicates;
@@ -40,7 +40,7 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
-                .additionalModels(typeResolver.resolve(org.lasencinas.bombersauthentication.Model.Domain.AuthUser.Bomber.class), typeResolver.resolve(Dni.class))
+                .additionalModels(typeResolver.resolve(org.lasencinas.bombersauthentication.Model.Domain.Bomber.class), typeResolver.resolve(Dni.class))
                 .globalOperationParameters(apiParameters())
                 .ignoredParameterTypes(Link.class, ModelAndView.class,
                         WebMvcProperties.View.class, Map.class);

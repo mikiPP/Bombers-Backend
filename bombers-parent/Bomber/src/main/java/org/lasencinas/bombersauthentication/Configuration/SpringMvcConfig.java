@@ -1,4 +1,4 @@
-package com.mpp.commons.Configuration;
+package org.lasencinas.bombersauthentication.Configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

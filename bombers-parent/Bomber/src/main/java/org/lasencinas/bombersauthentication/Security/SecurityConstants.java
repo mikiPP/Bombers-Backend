@@ -1,4 +1,4 @@
-package com.mpp.commons.Security;
+package org.lasencinas.bombersauthentication.Security;
 
 public final class SecurityConstants {
 

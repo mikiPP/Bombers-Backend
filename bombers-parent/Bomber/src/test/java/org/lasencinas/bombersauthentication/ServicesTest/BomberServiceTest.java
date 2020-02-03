@@ -1,5 +1,6 @@
 package org.lasencinas.bombersauthentication.ServicesTest;
 
+import com.mpp.commons.Exception.InvalidDniException;
 import com.mpp.commons.test.IntegrationTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,26 +34,21 @@ public class BomberServiceTest extends IntegrationTest {
 
 
     @Test
-    public void createAuthUserValidShouldReturnThatAuthUser() {
+    public void createAuthUserValidShouldReturnThatAuthUser() throws Exception {
 
         //-------------------Given-------------------//
 
-        DniDto dni = new DniDto();
-        dni.setDni("52304534G");
-
-
         BomberDto bomberDto = createAuthUserDto();
-        bomberDto.setDni(dni);
+        bomberDto.setDni("52304534G");
 
         //-------------------When-------------------//
 
-        BomberDto newAuthUser = bomberService.createAuthUser(bomberDto);
+        BomberDto newAuthUser = bomberService.insertBomber(bomberDto);
 
         //-------------------Then-------------------//
 
         assertEquals(bomberDto.getEmail(), newAuthUser.getEmail());
-        assertEquals(bomberDto.getDni().getDni(), newAuthUser.getDni().getDni());
-        assertTrue(newAuthUser.getDni().getUserId() != null);
+        assertEquals(bomberDto.getDni(), "52304534G");
         assertTrue(bomberDto.getPassword() != newAuthUser.getPassword());
         assertTrue(bCryptPasswordEncoder.matches(bomberDto.getPassword(), newAuthUser.getPassword()));
 
@@ -60,16 +56,15 @@ public class BomberServiceTest extends IntegrationTest {
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void createAuthUserThatDniIsNotInTheDBShouldReturnThatAuthUser() {
+    public void createAuthUserThatDniIsNotInTheDBShouldReturnThatAuthUser() throws Exception {
 
         //-------------------Given-------------------//
 
         BomberDto bomberDto = createAuthUserDto();
-        bomberDto.getDni().setDni("12346678-Z");
 
         //-------------------When-------------------//
 
-        bomberService.createAuthUser(bomberDto);
+        bomberService.insertBomber(bomberDto);
 
         //-------------------Then-------------------//
 
@@ -77,17 +72,17 @@ public class BomberServiceTest extends IntegrationTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void createAuthUserThatDniIsUsedShouldReturnThatAuthUser() {
+    public void createAuthUserThatDniIsUsedShouldReturnThatAuthUser() throws Exception{
 
         //-------------------Given-------------------//
 
         BomberDto bomberDto = createAuthUserDto();
-        bomberService.createAuthUser(bomberDto);
+        bomberService.insertBomber(bomberDto);
 
 
         //-------------------When-------------------//
 
-        bomberService.createAuthUser(bomberDto);
+        bomberService.insertBomber(bomberDto);
 
         //-------------------Then-------------------//
 
@@ -97,12 +92,10 @@ public class BomberServiceTest extends IntegrationTest {
     private BomberDto createAuthUserDto() {
 
         BomberDto bomberDto = new BomberDto();
-        DniDto dni = new DniDto();
-        dni.setDni(dnis.get(index));
 
         bomberDto.setId(Id);
         bomberDto.setEmail(String.format("test%s@test.com", Id));
-        bomberDto.setDni(dni);
+        bomberDto.setDni(dnis.get(index));
         bomberDto.setPassword("Test" + Id);
 
         Id++;
